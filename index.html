@@ -5,153 +5,275 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EPSON IJP Robotics Arduino</title>
   <style>
-    :root {
-      --bg: #f4f6f9;
-      --card: #fff;
-      --text: #222;
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --muted: #555;
-    }
     body {
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
       margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
+      padding: 20px;
     }
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 20px;
     }
     header h1 {
       font-size: 2rem;
-      color: var(--primary);
-      margin: 0.5rem 0;
+      color: #38bdf8;
     }
-    header p {
-      color: var(--muted);
-    }
-    section {
-      background: var(--card);
-      padding: 1.5rem;
+    .card {
+      background: #1e293b;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      margin-bottom: 1.5rem;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
     h2 {
+      color: #fbbf24;
       margin-top: 0;
-      font-size: 1.2rem;
-      color: var(--primary-dark);
     }
-    ol, ul {
-      padding-left: 1.2rem;
-    }
-    pre {
-      background: #f0f2f5;
-      padding: 1rem;
+    details {
+      margin: 10px 0;
+      padding: 10px;
+      background: #334155;
       border-radius: 8px;
-      overflow-x: auto;
-      font-family: monospace;
-      font-size: 0.9rem;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #e2e8f0;
+    }
+    ul, ol {
+      margin-left: 20px;
     }
     .download-section {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
     }
     select {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
+      background: #334155;
+      color: #e5e7eb;
     }
     button.download {
-      padding: 0.75rem 1.25rem;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 500;
-      border: none;
-      border-radius: 8px;
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: 0.3s;
     }
     button.download:hover {
-      background: var(--primary-dark);
+      background: #0ea5e9;
     }
-    footer {
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 12px;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: none;
+      background: #334155;
+      color: #e5e7eb;
+      text-align: center;
+    }
+    .modal-content button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .modal-content button:hover {
+      background: #0ea5e9;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🤖 EPSON IJP Robotics Arduino</h1>
-      <p>Para sa mga susunod na Henerasyon</p>
-    </header>
+  <header>
+    <h1>EPSON IJP Robotics Arduino</h1>
+    <p>Download Arduino codes and follow setup instructions</p>
+  </header>
 
-    <section>
-      <h2>📖 Instructions</h2>
-      <ol>
-        <li>Install Arduino IDE (v1.8+ or Arduino IDE 2).</li>
-        <li>Connect your Arduino Uno / Leonardo via USB.</li>
-        <li>Open the selected <code>.ino</code> file in the IDE.</li>
-        <li>Select your board under <b>Tools → Board</b>.</li>
-        <li>Click <b>Upload</b> to program the Arduino.</li>
-      </ol>
-    </section>
+  <section class="card">
+    <h2>💾 Download Code</h2>
+    <div class="download-section">
+      <select id="versionSelect">
+        <option value="Trigger_Reset.ino">Version 1 - One Click Reset</option>
+        <option value="Trigger_LED.ino">Version 2 - With LED</option>
+        <option value="Trigger_Original.ino">Version 3 - Source</option>
+      </select>
+      <button class="download" onclick="openModal()">⬇ Download</button>
+    </div>
+  </section>
 
-    <section>
-      <h2>💾 Download Code</h2>
-      <div class="download-section">
-        <select id="versionSelect">
-          <option value="Trigger_Reset.ino">Version 1 - One Click Reset</option>
-          <option value="Trigger_LED.ino">Version 2 - With LED</option>
-          <option value="Trigger_Original.ino">Version 3 - Source</option>
-        </select>
-        <button class="download" onclick="downloadCode()">⬇ Download</button>
-      </div>
-    </section>
+  <section class="card">
+    <h2>📖 Instructions</h2>
 
-    <section>
-      <h2>📂 Extra Resources</h2>
+    <details>
+      <summary>🛠 Materials Needed</summary>
       <ul>
-        <li><a href="schematic.png" target="_blank">Wiring Diagram</a></li>
-        <li><a href="README.pdf" target="_blank">Detailed Documentation (PDF)</a></li>
+        <li>Arduino Leonardo</li>
+        <li>USB Host Shield (compatible with Leonardo)</li>
+        <li>USB Barcode Scanner (HID keyboard mode)</li>
+        <li>Single-channel relay module (5V, optocoupler recommended)</li>
+        <li>Enclosure box (to house all components)</li>
+        <li>Power supply (USB 5V or external regulated 5V)</li>
+        <li>Wires, screws, standoffs, and terminals for connections</li>
+        <li>ICT/QPIT tester connection wires: COM & NC</li>
       </ul>
-    </section>
+    </details>
 
-    <section>
-      <h2>📝 Notes</h2>
-      <pre>
-- Calibrate sensors before running.
-- Adjust motor speed constants if needed.
-- Default baud rate: 9600.
-      </pre>
-    </section>
+    <details>
+      <summary>⚡ Wiring Instructions</summary>
+      <ol>
+        <li>Stack the USB Host Shield onto the Arduino Leonardo.</li>
+        <li>Connect the USB barcode scanner to the USB Host Shield port.</li>
+        <li>Relay wiring:
+          <ul>
+            <li>Relay IN pin → Arduino digital output pin (e.g., D7)</li>
+            <li>Relay VCC → 5V on Arduino</li>
+            <li>Relay GND → GND on Arduino</li>
+          </ul>
+        </li>
+        <li>Tester connection:
+          <ul>
+            <li>COM wire → Relay COM terminal</li>
+            <li>NC wire → Relay NC terminal</li>
+          </ul>
+        </li>
+        <li>Optional LED indicator in parallel with relay output</li>
+      </ol>
+    </details>
 
-    <footer>
-      © 2025 EPSON IJP Robotics Arduino | Hosted on GitHub Pages
-    </footer>
+    <details>
+      <summary>🔌 Powering the System</summary>
+      <p>
+        If your barcode scanner is low power (&lt;500mA), you can power everything via the Arduino Leonardo’s USB.<br>
+        If it’s high power, use an external powered USB hub between the scanner and the USB Host Shield.
+      </p>
+    </details>
+
+    <details>
+      <summary>📄 Arduino Program Workflow</summary>
+      <ol>
+        <li>Initialize USB Host Shield and HID barcode scanner library</li>
+        <li>Wait for barcode input from the scanner</li>
+        <li>On scan:
+          <ul>
+            <li>Send barcode data to PC via Keyboard emulation</li>
+            <li>Activate relay → signal tester</li>
+            <li>Optionally blink LED 3 times</li>
+          </ul>
+        </li>
+        <li>After short delay (500ms–1s) → deactivate relay</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>🔒 Mounting & Enclosure Setup</summary>
+      <ul>
+        <li>Place Arduino + USB Host Shield + Relay inside enclosure</li>
+        <li>Drill openings for:
+          <ul>
+            <li>USB port (PC connection)</li>
+            <li>USB Host Shield port (scanner)</li>
+            <li>COM/NC output terminals</li>
+            <li>Optional LED or reset button</li>
+          </ul>
+        </li>
+        <li>Secure components with screws/standoffs</li>
+        <li>Label external terminals COM / NC / USB / RESET</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>✅ Testing Procedure</summary>
+      <ol>
+        <li>Power Arduino via USB</li>
+        <li>Plug in barcode scanner</li>
+        <li>Scan a test barcode</li>
+        <li>PC should display scanned code</li>
+        <li>Relay should click (NC opens briefly)</li>
+        <li>Tester should detect the signal</li>
+        <li>LED blinks 3 times (if installed)</li>
+        <li>If successful, mount permanently and connect to tester</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Modal -->
+  <div id="securityModal" class="modal">
+    <div class="modal-content">
+      <h3>🔐 Enter Security Code</h3>
+      <input type="password" id="securityCode" placeholder="Enter code">
+      <button onclick="verifyCode()">Submit</button>
+    </div>
   </div>
 
   <script>
-    function downloadCode() {
-      const select = document.getElementById("versionSelect");
-      const file = select.value;
-      window.location.href = file;
+    function openModal() {
+      document.getElementById('securityModal').style.display = 'flex';
+    }
+
+    function verifyCode() {
+      const code = document.getElementById('securityCode').value;
+      const correctCode = "1234"; // change this as needed
+      if (code === correctCode) {
+        document.getElementById('securityModal').style.display = 'none';
+        const file = document.getElementById('versionSelect').value;
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = file;
+        a.click();
+      } else {
+        alert("❌ Incorrect security code!");
+      }
+    }
+
+    // Close modal if user clicks outside content
+    window.onclick = function(event) {
+      const modal = document.getElementById('securityModal');
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
     }
   </script>
 </body>
 </html>
-
