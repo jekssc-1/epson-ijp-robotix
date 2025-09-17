@@ -87,7 +87,7 @@
     }
     /* Modal styling */
     .modal {
-      display: none; /* hidden by default */
+      display: none;
       position: fixed;
       z-index: 10;
       left: 0; top: 0;
@@ -95,6 +95,12 @@
       background-color: rgba(0,0,0,0.8);
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+    .modal.show {
+      display: flex;
+      opacity: 1;
     }
     .modal-content {
       background: #1e293b;
@@ -104,6 +110,24 @@
       width: 90%;
       max-width: 450px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      position: relative;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content.shake {
+      animation: shake 0.4s;
+      border: 2px solid #f87171;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-10px); }
+      80% { transform: translateX(10px); }
+      100% { transform: translateX(0); }
     }
     .modal-content h3 {
       margin-top: 0;
@@ -111,7 +135,7 @@
       font-size: 1.2rem;
     }
     .modal-content input {
-      width: 100%;
+      width: 80%;
       padding: 12px;
       font-size: 1rem;
       margin-top: 20px;
@@ -135,6 +159,21 @@
     .modal-content button:hover {
       background: #0ea5e9;
     }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent !important;
+      color: #e5e7eb;
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+    .close-btn:hover, .close-btn:focus {
+      background: transparent !important;
+      color: #e5e7eb;
+    }
     footer {
       text-align: center;
       margin-top: auto;
@@ -147,7 +186,7 @@
 <body>
   <header>
     <h1>EPSON IJP Robotics Arduino</h1>
-    <p>Para sa susunod na Henerasyon</p>
+    <p>Para sa mga susunod na Henerasyon</p>
   </header>
 
   <section class="card">
@@ -164,7 +203,6 @@
 
   <section class="card">
     <h2>📖 Instructions</h2>
-
     <details>
       <summary>🛠 Materials Needed</summary>
       <ul>
@@ -178,7 +216,6 @@
         <li>ICT/QPIT tester connection wires: COM & NC</li>
       </ul>
     </details>
-
     <details>
       <summary>⚡ Wiring Instructions</summary>
       <ol>
@@ -200,7 +237,6 @@
         <li>Optional LED indicator in parallel with relay output</li>
       </ol>
     </details>
-
     <details>
       <summary>🔌 Powering the System</summary>
       <p>
@@ -208,7 +244,6 @@
         If it’s high power, use an external powered USB hub between the scanner and the USB Host Shield.
       </p>
     </details>
-
     <details>
       <summary>📄 Arduino Program Workflow</summary>
       <ol>
@@ -224,7 +259,6 @@
         <li>After short delay (500ms–1s) → deactivate relay</li>
       </ol>
     </details>
-
     <details>
       <summary>🔒 Mounting & Enclosure Setup</summary>
       <ul>
@@ -241,7 +275,6 @@
         <li>Label external terminals COM / NC / USB / RESET</li>
       </ul>
     </details>
-
     <details>
       <summary>✅ Testing Procedure</summary>
       <ol>
@@ -259,7 +292,8 @@
 
   <!-- Modal -->
   <div id="securityModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" id="modalContent">
+      <button class="close-btn" onclick="closeModal()">×</button>
       <h3>🔐 Enter Security Code</h3>
       <input type="password" id="securityCode" placeholder="Enter code">
       <button onclick="verifyCode()">Submit</button>
@@ -267,36 +301,42 @@
   </div>
 
   <footer>
-    © 2025 CPE x Innovation Team
+    © 2025 CPE x Innovation Team. All rights reserved.
   </footer>
 
   <script>
+    const modal = document.getElementById('securityModal');
+    const modalContent = document.getElementById('modalContent');
+    const input = document.getElementById('securityCode');
+
     function openModal() {
-      document.getElementById('securityModal').style.display = 'flex';
+      modal.classList.add('show');
+      input.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      input.value = '';
+      modalContent.classList.remove('shake');
     }
 
     function verifyCode() {
-      const code = document.getElementById('securityCode').value;
-      const correctCode = "nestorpeps"; // change this
+      const code = input.value;
+      const correctCode = "nestorpeps"; 
       if (code === correctCode) {
-        document.getElementById('securityModal').style.display = 'none';
+        closeModal();
         const file = document.getElementById('versionSelect').value;
         const a = document.createElement('a');
         a.href = file;
         a.download = file;
         a.click();
       } else {
-        alert("❌ Incorrect security code!");
-      }
-    }
-
-    window.onclick = function(event) {
-      const modal = document.getElementById('securityModal');
-      if (event.target === modal) {
-        modal.style.display = "none";
+        input.value = '';
+        modalContent.classList.remove('shake');
+        void modalContent.offsetWidth;
+        modalContent.classList.add('shake');
       }
     }
   </script>
 </body>
 </html>
-
