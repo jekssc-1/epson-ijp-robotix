@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPSON IJP Robotics Arduino</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #fff;
+      --text: #222;
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --muted: #555;
+    }
+    body {
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin: 0.5rem 0;
+    }
+    header p {
+      color: var(--muted);
+    }
+    section {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+    ol, ul {
+      padding-left: 1.2rem;
+    }
+    pre {
+      background: #f0f2f5;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    .download-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button.download {
+      padding: 0.75rem 1.25rem;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button.download:hover {
+      background: var(--primary-dark);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🤖 EPSON IJP Robotics Arduino</h1>
+      <p>Para sa mga susunod na Henerasyon</p>
+    </header>
+
+    <section>
+      <h2>📖 Instructions</h2>
+      <ol>
+        <li>Install Arduino IDE (v1.8+ or Arduino IDE 2).</li>
+        <li>Connect your Arduino Uno / Leonardo via USB.</li>
+        <li>Open the selected <code>.ino</code> file in the IDE.</li>
+        <li>Select your board under <b>Tools → Board</b>.</li>
+        <li>Click <b>Upload</b> to program the Arduino.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>💾 Download Code</h2>
+      <div class="download-section">
+        <select id="versionSelect">
+          <option value="Trigger_Reset.ino">Version 1 - One Click Reset</option>
+          <option value="Trigger_Led.ino">Version 2 - With LED</option>
+          <option value="Trigger_Original.ino">Version 3 - Source</option>
+        </select>
+        <button class="download" onclick="downloadCode()">⬇ Download</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>📂 Extra Resources</h2>
+      <ul>
+        <li><a href="schematic.png" target="_blank">Wiring Diagram</a></li>
+        <li><a href="README.pdf" target="_blank">Detailed Documentation (PDF)</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📝 Notes</h2>
+      <pre>
+- Calibrate sensors before running.
+- Adjust motor speed constants if needed.
+- Default baud rate: 9600.
+      </pre>
+    </section>
+
+    <footer>
+      © 2025 EPSON IJP Robotics Arduino | Hosted on GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    function downloadCode() {
+      const select = document.getElementById("versionSelect");
+      const file = select.value;
+      window.location.href = file;
+    }
+  </script>
+</body>
+</html>
